@@ -64,7 +64,39 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts|max:255',
+            'content' => 'required',
+        ], [
+            'title.required' => 'The title field is required.',
+            'slug.unique' => 'This slug is already taken.',
+            'content.required' => 'The content field is required.',
+        ]);
+
+        $post = Post::create([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'content' => $request->content,
+            'published_at' => now(),
+            'author_id' => auth()->id(),
+        ]);
+
+        return Inertia::render('Pages/Blog/Partials/Posts', [
+            'posts' => Post::with('author')->get()->map(function ($post) {
+                return [
+                    'id' => $post->id,
+                    'title' => $post->title,
+                    'summary' => $post->summary . '...',
+                    'published_at' => $post->published_at,
+                    'author' => $post->author->name,
+                    'slug' => $post->slug,
+                ];
+            }),
+        ]);
+
+
     }
 
     /**
