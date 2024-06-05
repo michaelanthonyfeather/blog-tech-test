@@ -4,14 +4,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', 'App\Http\Controllers\PostController@index')->name('blog.index');
+Route::get('/search', 'App\Http\Controllers\PostController@search')->name('blog.search');
+Route::get('/posts/{post:slug}', 'App\Http\Controllers\PostController@show')->name('blog.show');
 
 Route::middleware([
     'auth:sanctum',
