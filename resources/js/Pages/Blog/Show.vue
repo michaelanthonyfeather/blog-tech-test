@@ -17,7 +17,7 @@
                             </div>
                         </div>
                         <div class="right flex justify-end">
-                            <LikeButton ></LikeButton>
+                            <LikeButton :postId="post.id" :isLiked="post.user_liked" />
                             <div v-if="post.likes.length > 1" class="h-max mt-1 ml-3">{{ post.likes }} likes</div>
                         </div>
                     </div>

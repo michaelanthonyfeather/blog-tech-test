@@ -24,6 +24,7 @@ class PostController extends Controller
                     'published_at' => $post->published_at,
                     'author' => $post->author->name,
                     'slug' => $post->slug,
+                    'user_liked' => auth()->check() ? $post->likes->contains(auth()->user()->id) : false,
                 ];
             }),
         ]);
@@ -44,6 +45,7 @@ class PostController extends Controller
                     'published_at' => $post->published_at,
                     'author' => $post->author->name,
                     'slug' => $post->slug,
+                    'user_liked' => auth()->check() ? $post->likes->contains(auth()->user()->id) : false,
                 ];
             });
 
@@ -101,6 +103,7 @@ class PostController extends Controller
                 'published_at' => $post->published_at->format('jS F Y'),
                 'read_time' => $post->read_time,
                 'likes' => $post->likes->count(),
+                'user_liked' => auth()->check() ? $post->likes->contains(auth()->user()->id) : false,
                 'author' => $post->author->name,
                 'slug' => $post->slug,
             ],
@@ -112,6 +115,7 @@ class PostController extends Controller
                     'published_at' => $post->published_at,
                     'author' => $post->author->name,
                     'slug' => $post->slug,
+                    'user_liked' => auth()->check() ? $post->likes->contains(auth()->user()->id) : false,
                 ];
             }),
         ]);
@@ -139,5 +143,16 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function like() {
+        $post = Post::find(request('post_id'));
+        $post->likes()->toggle(auth()->user()->id);
+
+        if ($post->likes->contains(auth()->user()->id)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

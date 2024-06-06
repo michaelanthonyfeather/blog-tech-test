@@ -5,7 +5,7 @@
             <p class="mb-5">{{ post.summary }}</p>
             <div class="bottom mt-auto flex justify-between content-center flex-wrap">
                 <Link :href="`/posts/${post.slug}`" class="button">Read More</Link>
-                <LikeButton :post="post" />
+                <LikeButton :postId="post.id" :isLiked="post.user_liked" />
             </div>
         </div>
     </div>
