@@ -3,6 +3,8 @@
 
 This Laravel application allows users to create, list, search, and like posts.
 
+Live demo: [https://blog-tech-test.michaelanthonyfeather.com](https://blog-tech-test.michaelanthonyfeather.com)
+
 # Features
 - User creates a new post with title and content.
 - Posts are displayed in a list with title and like functionality.
@@ -37,6 +39,10 @@ Start the local development server. This will start the server at `http://localh
 Start the local node server
 
     npm run watch
+
+Add API key sent via email for TinyMCE editor in the `.env` file.
+
+    VITE_TINY_MCE_API_KEY=API_KEY
 
 # Database setup
 

@@ -2,7 +2,7 @@
     <Head :title="post.title" />
     <div class="relative min-h-screen flex flex-col items-center selection:bg-[#FF2D20] selection:text-white pt-8">
         <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-            <Header :canLogin="canLogin" :canRegister="canRegister" />
+            <Header/>
 
             <main class="">
                 <div class="post">
@@ -49,14 +49,6 @@ defineProps({
     },
     morePosts: {
         type: Object,
-        required: true
-    },
-    canLogin: {
-        type: Boolean,
-        required: true
-    },
-    canRegister: {
-        type: Boolean,
         required: true
     }
 });

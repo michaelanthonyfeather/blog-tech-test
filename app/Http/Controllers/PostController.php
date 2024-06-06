@@ -94,8 +94,6 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return Inertia::render('Blog/Show', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
             'post' => [
                 'id' => $post->id,
                 'title' => $post->title,
