@@ -55,5 +55,5 @@ Run migrations
 
 If you want to seed the database with dummy post data, run
 
-    php artisan db:seed
+    php artisan db:seed --class=PostSeeder
 

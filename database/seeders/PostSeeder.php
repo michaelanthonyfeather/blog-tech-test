@@ -22,7 +22,7 @@ class PostSeeder extends Seeder
 
         Post::factory()
             ->count(10)
-            ->for($user ?? User::first())
+            ->for($user ?? User::first(), 'author')
             ->create();
     }
 }
