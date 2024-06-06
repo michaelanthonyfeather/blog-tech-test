@@ -75,7 +75,6 @@ class PostController extends Controller
             'content.required' => 'The content field is required.',
         ]);
 
-
         $post = Post::create([
             'title' => $request->title,
             'slug' => $request->slug,

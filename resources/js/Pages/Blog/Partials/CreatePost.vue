@@ -29,7 +29,12 @@
             ></textarea>
         </div>
         <input type="hidden" name="user_id" v-model="form.user_id"/>
-        <div class="flex justify-center">
+        <div class="flex justify-center flex-wrap">
+            <div v-if="$page.props.errors" class="w-full text-center mb-4">
+                <ul>
+                    <li class="text-red-700" v-for="(error, index) in $page.props.errors" :key="index">{{ error }}</li>
+                </ul>
+            </div>
             <button type="submit" class="button primary">
                 Submit
             </button>
@@ -51,6 +56,9 @@ const form = reactive({
 const apiKey = computed(() => import.meta.env.VITE_TINY_MCE_API_KEY);
 
 function makeSlug() {
+    if (!form.title) {
+        return;
+    }
     form.slug = form.title.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
