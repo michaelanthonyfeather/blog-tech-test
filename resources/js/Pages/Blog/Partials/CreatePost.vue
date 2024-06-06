@@ -38,9 +38,9 @@
 </template>
 
 <script setup>
-import { computed, reactive } from 'vue'
-import { router } from '@inertiajs/vue3'
-import Editor from '@tinymce/tinymce-vue'
+import { computed, reactive } from 'vue';
+import { router } from '@inertiajs/vue3';
+import Editor from '@tinymce/tinymce-vue';
 
 const form = reactive({
     title: null,
@@ -55,6 +55,19 @@ function makeSlug() {
 }
 
 function submit() {
-    router.post('/posts', form)
+    router.post('/posts', form, {
+        preserveScroll: true,
+        onSuccess: () => {
+            router.visit('/',  {
+                only: ['posts'],
+                preserveScroll: true,
+            });
+
+            var section = document.getElementById('postTitle');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
 }
 </script>

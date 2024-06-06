@@ -13,7 +13,8 @@ class Post extends Model
         'title',
         'slug',
         'content',
-        'published_at'
+        'user_id',
+        'published_at',
     ];
 
     public function casts()
@@ -40,7 +41,7 @@ class Post extends Model
 
     public function getSummaryAttribute()
     {
-        return substr($this->content, 0, 100);
+        return substr(strip_tags($this->content), 0, 100);
     }
 
     public function getReadTimeAttribute()

@@ -21,7 +21,7 @@
                             <div v-if="post.likes.length > 1" class="h-max mt-1 ml-3">{{ post.likes }} likes</div>
                         </div>
                     </div>
-                    <p class="text-lg">{{ post.content }}</p>
+                    <p class="text-lg" v-html="post.content"></p>
 
                     <div class="more mt-24">
                         <h2 class="text-2xl font-medium mb-5">More Posts</h2>

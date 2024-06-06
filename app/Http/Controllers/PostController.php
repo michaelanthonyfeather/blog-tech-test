@@ -16,9 +16,7 @@ class PostController extends Controller
     public function index()
     {
         return Inertia::render('Blog/Index', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'posts' => Post::with('author')->get()->map(function ($post) {
+            'posts' => Post::with('author')->orderBy('created_at', 'desc')->get()->map(function ($post) {
                 return [
                     'id' => $post->id,
                     'title' => $post->title,
@@ -34,6 +32,7 @@ class PostController extends Controller
     public function search(Request $request) {
 
         $posts = Post::where('title', 'like', '%' . $request->searchVal . '%')
+            ->orderBy('created_at', 'desc')
             ->orWhere('content', 'like', '%' . $request->searchVal . '%')
             ->with('author')
             ->get()
@@ -75,28 +74,16 @@ class PostController extends Controller
             'content.required' => 'The content field is required.',
         ]);
 
+
         $post = Post::create([
             'title' => $request->title,
             'slug' => $request->slug,
             'content' => $request->content,
             'published_at' => now(),
-            'author_id' => auth()->id(),
+            'user_id' => auth()->user()->id,
         ]);
 
-        return Inertia::render('Pages/Blog/Partials/Posts', [
-            'posts' => Post::with('author')->get()->map(function ($post) {
-                return [
-                    'id' => $post->id,
-                    'title' => $post->title,
-                    'summary' => $post->summary . '...',
-                    'published_at' => $post->published_at,
-                    'author' => $post->author->name,
-                    'slug' => $post->slug,
-                ];
-            }),
-        ]);
-
-
+        return to_route('blog.index');
     }
 
     /**
