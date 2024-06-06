@@ -34,7 +34,6 @@ class PostController extends Controller
 
         $posts = Post::where('title', 'like', '%' . $request->searchVal . '%')
             ->orderBy('created_at', 'desc')
-            ->orWhere('content', 'like', '%' . $request->searchVal . '%')
             ->with('author')
             ->get()
             ->map(function ($post) {
